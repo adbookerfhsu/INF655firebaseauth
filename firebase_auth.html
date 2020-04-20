@@ -1,0 +1,165 @@
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+  />
+   <link rel="stylesheet" href="main.css">
+
+  <title>Jedi Training Authentication</title>
+  </head>
+<body>
+  <div class="container">
+    <h1>Register for Training</h1>
+    <div id="alert-signup" class="alert alert-danger hide" role="alert"></div>
+    <form id="form-signup">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="signup_email"
+          aria-describedby="emailHelp"
+          placeholder="Enter email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="signup_password"
+          placeholder="Password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    <hr />
+    <h1>Sign in to Jedi Account</h1>
+    <div id="alert-signin" class="alert alert-danger hide" role="alert"></div>
+    <form id="form-signin">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="signin_email"
+          aria-describedby="emailHelp"
+          placeholder="Enter email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="signin_password"
+          placeholder="Password"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Sign In</button>
+    </form>
+    <hr />
+    <div id="signoutbutton">
+      <p>"It must be a decoy. Sir several escape pods have been jettisoned during the fighting but no life-forms were aboard!" Darth Vader, "She must have hidden the plans in the escape pod. Send a detachment down to retrive them..." (Use the button below to send the detachment)</p>
+    <button id="signout" class="btn-purple">Sign Out</button>
+    </div>
+  </div>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDd07m2g2ik0Lu02mbzZCNcmxxqKft8hkg",
+    authDomain: "signinout-3e55f.firebaseapp.com",
+    databaseURL: "https://signinout-3e55f.firebaseio.com",
+    projectId: "signinout-3e55f",
+    storageBucket: "signinout-3e55f.appspot.com",
+    messagingSenderId: "869118065835",
+    appId: "1:869118065835:web:87979388d98ee47b744bee",
+    measurementId: "G-966M3YS14W"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  var auth = firebase.auth();
+  
+  
+    $(document).on("submit", "#form-signup", function(event) {
+      event.preventDefault();
+      var promise = auth.createUserWithEmailAndPassword(
+        $("#signup_email").val(),
+        $("#signup_password").val()
+      );
+      promise.catch((e) => console.log(e.message));
+    });
+
+    $(document).on("submit", "#form-signin", function(event) {
+      event.preventDefault();
+      var promise = auth.signInWithEmailAndPassword(
+        $("#signin_email").val(),
+        $("#signin_password").val()
+      );
+      promise.catch((e) => {
+        console.log(e.message);
+        $("#alert-signin").text(e.message);
+        $("#alert-signin").show();
+      });
+    });
+
+    $(document).on("click", "#signout", function(event) {
+      event.preventDefault();
+      var promise = auth.signOut();
+      promise.catch((e) => console.log(e.message));
+    });
+
+    auth.onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        console.log(firebaseUser);
+        user = firebaseUser;
+        window.location.href = "private.html";
+       } else {
+        user = null;
+        window.alert("You are not the droids we are looking for! Please Register or Sign In");
+        console.log("not logged in");
+      }
+    });
+   </script>
+  </body>
+</html>

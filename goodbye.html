@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="main.css">
+  
+      <title>Goodbye</title>
+  </head>
+  <body>
+      <div class="container">
+        <h1>I find your lack of faith disturbing!</h1>
+          <p><img src="chosenone.jpg" alt="You were the Chosen One" id="obi"></p>
+          <p> Now look what you have done, you messed up the balance of the force...</p>
+        <div>
+            <p><a href="firebase_auth.html">Go back to Sign in Page</a></p>
+        </div>
+        </div>  
+    
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDd07m2g2ik0Lu02mbzZCNcmxxqKft8hkg",
+    authDomain: "signinout-3e55f.firebaseapp.com",
+    databaseURL: "https://signinout-3e55f.firebaseio.com",
+    projectId: "signinout-3e55f",
+    storageBucket: "signinout-3e55f.appspot.com",
+    messagingSenderId: "869118065835",
+    appId: "1:869118065835:web:87979388d98ee47b744bee",
+    measurementId: "G-966M3YS14W"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  var auth = firebase.auth();
+  $(document).on("click", "#signout", function(event) {
+      event.preventDefault();
+      var promise = auth.signOut();
+      promise.catch((e) => console.log(e.message));
+      window.location.href = "goodbye.html";
+    });
+
+    
+  </script>
+
+  </body>
+</html>

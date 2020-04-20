@@ -1,0 +1,33 @@
+body {
+    background-color: aliceblue;
+}
+
+.button {
+    padding: .5rem;
+    background-color: blue;
+    color: white;
+}
+
+.container {
+    display: block;
+    padding: 1rem;
+    width: 30%;
+    margin: auto;
+    border: .15rem solid blue;
+}
+
+.btn-purple {
+    padding: .5rem;
+    background-color: blueviolet;
+    color: white;
+}
+
+.btn-red {
+    padding: .5rem;
+    background-color: red;
+    color: white;
+}
+
+#obi {
+    width:90%;
+}
